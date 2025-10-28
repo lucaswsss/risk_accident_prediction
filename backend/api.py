@@ -35,11 +35,13 @@ def add_score():
 @app.route("/leaderboard", methods=["GET"])
 def leaderboard():
     conn = duckdb.connect(DB_PATH)
-    rows = conn.execute("SELECT pseudo, score FROM scores ORDER BY score DESC LIMIT 10").fetchall()
+    try:
+        rows = conn.execute("SELECT pseudo, score FROM scores ORDER BY score DESC LIMIT 10").fetchall()
+    except:
+        rows = []
     conn.close()
+    return jsonify(rows)
 
-    leaderboard = [{"pseudo": r[0], "score": r[1]} for r in rows]
-    return jsonify(leaderboard)
 
 if __name__ == "__main__":
     init_db()

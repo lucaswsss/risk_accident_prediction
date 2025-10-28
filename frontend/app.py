@@ -13,5 +13,14 @@ requests.post(f"{API_URL}/add_score", json={"username": "Sara", "score": 12})
 
 # Récupérer le leaderboard
 res = requests.get(f"{API_URL}/leaderboard")
-leaderboard = res.json()
+
+if res.status_code == 200:
+    try:
+        leaderboard = res.json()
+    except requests.exceptions.JSONDecodeError:
+        leaderboard = [] 
+else:
+    leaderboard = []
+
+st.write(leaderboard)
 st.write(leaderboard)
