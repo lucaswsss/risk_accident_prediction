@@ -42,6 +42,14 @@ def leaderboard():
     conn.close()
     return jsonify(rows)
 
+@app.route("/reset_leaderboard", methods=["POST"])
+def reset_leaderboard():
+    conn = duckdb.connect(DB_PATH)
+    conn.execute("DELETE FROM scores")
+    conn.close()
+    return jsonify({"message": "Leaderboard réinitialisé!"})
+
+
 
 if __name__ == "__main__":
     init_db()

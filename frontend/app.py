@@ -22,6 +22,12 @@ if res.status_code == 200:
 else:
     leaderboard = []
 
+if st.button("Réinitialiser le leaderboard"):
+    response = requests.post(f"{API_URL}/reset_leaderboard")
+    if response.status_code == 200:
+        st.success("Leaderboard réinitialisé !")
+    else:
+        st.error("Impossible de réinitialiser le leaderboard")
 
 df = pd.DataFrame(leaderboard)
 st.subheader("Leaderboard")
