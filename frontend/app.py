@@ -9,7 +9,7 @@ st.subheader("Prédiction du risque d'accident selon les caractéristiques des r
 API_URL = "https://risk-accident-prediction.onrender.com"
 
 # Ajouter un score
-requests.post(f"{API_URL}/add_score", json={"username": "Sara", "score": 12})
+#requests.post(f"{API_URL}/add_score", json={"pseudo": "Sarayandm", "score": 12})
 
 # Récupérer le leaderboard
 res = requests.get(f"{API_URL}/leaderboard")
@@ -22,5 +22,7 @@ if res.status_code == 200:
 else:
     leaderboard = []
 
-st.write(leaderboard)
-st.write(leaderboard)
+
+df = pd.DataFrame(leaderboard)
+st.subheader("Leaderboard")
+st.dataframe(df) 
