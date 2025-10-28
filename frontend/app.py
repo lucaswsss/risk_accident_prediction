@@ -9,7 +9,7 @@ st.subheader("Prédiction du risque d'accident selon les caractéristiques des r
 API_URL = "https://risk-accident-prediction.onrender.com"
 
 # Ajouter un score
-#requests.post(f"{API_URL}/add_score", json={"pseudo": "Sarayandm", "score": 12})
+requests.post(f"{API_URL}/add_score", json={"pseudo": "Sarayandm", "score": 12})
 
 # Récupérer le leaderboard
 res = requests.get(f"{API_URL}/leaderboard")
