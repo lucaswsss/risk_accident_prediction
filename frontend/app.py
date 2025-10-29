@@ -154,12 +154,12 @@ if st.session_state.prediction_done and st.session_state.route:
     st.write(f"### 🧠 Prédiction du modèle : **{pred_model:.2f}%**")
     st.write(f"### 📏 Écart avec ta prédiction : **{diff:.2f}**")
     st.write(f"## 🎯 Ton score final : {diff:.0f}")
-
+    score_final=float(diff)
     logger.info(f"Score calculé pour {pseudo} : {diff:.2f} (utilisateur {pred_user:.2f}%, modèle {pred_model:.2f}%)")
 
     # --- Envoi au leaderboard ---
     try:
-        res = requests.post(f"{API_URL}/add_score", json={"pseudo": pseudo, "score": diff})
+        res = requests.post(f"{API_URL}/add_score", json={"pseudo": pseudo, "score": score_final})
         if res.status_code == 200:
             logger.info(f"Score envoyé avec succès au leaderboard pour {pseudo}.")
         else:
