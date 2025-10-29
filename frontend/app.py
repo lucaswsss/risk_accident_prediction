@@ -10,7 +10,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-st.set_page_config(page_title="Risques d'accidents", layout="wide")
+st.set_page_config(page_title="Risques d'accidents", layout="wide", page_icon="🚗")
 
 logger.info("Chargement du modèle...")
 model = joblib.load("models/meilleure_modele.pkl")
