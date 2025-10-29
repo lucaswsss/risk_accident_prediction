@@ -19,49 +19,49 @@ if pages == "Accueil":
     accueil.lancer_accueil()
 if pages == "Jeu des prédictions":
     def generer_route():
-    road_type = random.choice(['Autoroute', 'Rurale', 'Urbaine'])
-    num_lanes = random.randint(1, 6)
-    curvature = round(random.uniform(0.0, 1.0), 2)
-    speed_limit = random.choice([25, 35, 45, 60, 70])
-    lighting = random.choice(['Lumière du jour', 'Sombre', 'Nocturne'])
-    weather = random.choice(['Clair', 'Pluvieux', 'Brumeux'])
-    road_signs = random.choice(['Oui', 'Non'])
-    public_road = random.choice(['Oui', 'Non'])
-    time_of_day = random.choice(['Matin', 'Après-Midi', 'Soirée'])
-    holiday = random.choice(['Oui', 'Non'])
-    school_season = random.choice(['Oui', 'Non'])
-    num_reported_accidents = random.randint(0, 6)
-
-    curv_speed_ratio = curvature * speed_limit
-    risk_per_lane = num_reported_accidents / (num_lanes + 1)
-    is_bad_weather = int(weather in ['Pluvieux', 'Brumeux'])
-    is_daylight = int(lighting == 'Lumière du jour')
-    lighting_night = int(lighting == 'Nocturne')
-    lighting_dim = int(lighting == 'Sombre')
-    weather_foggy = int(weather == 'Brumeux')
-
-    route = {
-        "road_type": road_type,
-        "num_lanes": num_lanes,
-        "curvature": curvature,
-        "speed_limit": speed_limit,
-        "lighting": lighting,
-        "weather": weather,
-        "num_reported_accidents": num_reported_accidents,
-        "curv_speed_ratio": curv_speed_ratio,
-        "risk_per_lane": risk_per_lane,
-        "is_bad_weather": is_bad_weather,
-        "is_daylight": is_daylight,
-        "lighting_night": lighting_night,
-        "lighting_dim": lighting_dim,
-        "weather_foggy": weather_foggy,
-        "road_signs_presents": road_signs,
-        "public_road": public_road,
-        "time_of_day": time_of_day,
-        "holiday": holiday,
-        "school_season": school_season
-    }
-    return route
+        road_type = random.choice(['Autoroute', 'Rurale', 'Urbaine'])
+        num_lanes = random.randint(1, 6)
+        curvature = round(random.uniform(0.0, 1.0), 2)
+        speed_limit = random.choice([25, 35, 45, 60, 70])
+        lighting = random.choice(['Lumière du jour', 'Sombre', 'Nocturne'])
+        weather = random.choice(['Clair', 'Pluvieux', 'Brumeux'])
+        road_signs = random.choice(['Oui', 'Non'])
+        public_road = random.choice(['Oui', 'Non'])
+        time_of_day = random.choice(['Matin', 'Après-Midi', 'Soirée'])
+        holiday = random.choice(['Oui', 'Non'])
+        school_season = random.choice(['Oui', 'Non'])
+        num_reported_accidents = random.randint(0, 6)
+    
+        curv_speed_ratio = curvature * speed_limit
+        risk_per_lane = num_reported_accidents / (num_lanes + 1)
+        is_bad_weather = int(weather in ['Pluvieux', 'Brumeux'])
+        is_daylight = int(lighting == 'Lumière du jour')
+        lighting_night = int(lighting == 'Nocturne')
+        lighting_dim = int(lighting == 'Sombre')
+        weather_foggy = int(weather == 'Brumeux')
+    
+        route = {
+            "road_type": road_type,
+            "num_lanes": num_lanes,
+            "curvature": curvature,
+            "speed_limit": speed_limit,
+            "lighting": lighting,
+            "weather": weather,
+            "num_reported_accidents": num_reported_accidents,
+            "curv_speed_ratio": curv_speed_ratio,
+            "risk_per_lane": risk_per_lane,
+            "is_bad_weather": is_bad_weather,
+            "is_daylight": is_daylight,
+            "lighting_night": lighting_night,
+            "lighting_dim": lighting_dim,
+            "weather_foggy": weather_foggy,
+            "road_signs_presents": road_signs,
+            "public_road": public_road,
+            "time_of_day": time_of_day,
+            "holiday": holiday,
+            "school_season": school_season
+        }
+        return route
 
 def lancer_jeu():
 
