@@ -19,6 +19,6 @@ pages=st.sidebar.radio("Sélectionnez une page",["Accueil", "Explorations des do
 if pages == "Accueil":
     accueil.lancer_accueil()
 if pages == "Prédiction des accidents":
-    predictions.lancer_predictions()
+    predictions.lancer_prediction()
 if pages == "Jeu des prédictions":
     jeu.lancer_jeu()
