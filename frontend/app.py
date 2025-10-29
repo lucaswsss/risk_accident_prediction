@@ -30,30 +30,42 @@ if "prediction_done" not in st.session_state:
 st.title("Jeu : Prédire le risque d'accident 🚗💥")
 st.subheader("Entre ton pseudo, génère une route et tente de deviner le risque d’accident le plus proche du modèle !")
 
+if "leaderboard" not in st.session_state:
+    try:
+        res = requests.get(f"{API_URL}/leaderboard")
+        if res.status_code == 200:
+            st.session_state.leaderboard = res.json()
+        else:
+            st.session_state.leaderboard = []
+            logger.warning(f"Erreur récupération leaderboard : {res.status_code}")
+    except Exception as e:
+        st.session_state.leaderboard = []
+        logger.error(f"Erreur récupération leaderboard : {e}")
+
 pseudo = st.text_input("Ton pseudo")
 
 # --- Fonction de génération d'une route ---
 def generer_route():
-    road_type = random.choice(['highway', 'rural', 'urban'])
+    road_type = random.choice(['Autoroute', 'Rurale', 'Urbaine'])
     num_lanes = random.randint(1, 6)
     curvature = round(random.uniform(0.0, 1.0), 2)
     speed_limit = random.choice([25, 35, 45, 60, 70])
-    lighting = random.choice(['daylight', 'dim', 'night'])
-    weather = random.choice(['clear', 'rainy', 'foggy'])
+    lighting = random.choice(['Lumière du jour', 'Sombre', 'Nocturne'])
+    weather = random.choice(['Clair', 'Pluvieux', 'Brumeux'])
     road_signs = random.choice(['Oui', 'Non'])
     public_road = random.choice(['Oui', 'Non'])
-    time_of_day = random.choice(['morning', 'afternoon', 'evening'])
+    time_of_day = random.choice(['Matin', 'Après-Midi', 'Soirée'])
     holiday = random.choice(['Oui', 'Non'])
     school_season = random.choice(['Oui', 'Non'])
     num_reported_accidents = random.randint(0, 6)
 
     curv_speed_ratio = curvature * speed_limit
     risk_per_lane = num_reported_accidents / (num_lanes + 1)
-    is_bad_weather = int(weather in ['rainy', 'foggy'])
-    is_daylight = int(lighting == 'daylight')
-    lighting_night = int(lighting == 'night')
-    lighting_dim = int(lighting == 'dim')
-    weather_foggy = int(weather == 'foggy')
+    is_bad_weather = int(weather in ['Pluvieux', 'Brumeux'])
+    is_daylight = int(lighting == 'Lumière du jour')
+    lighting_night = int(lighting == 'Nocturne')
+    lighting_dim = int(lighting == 'Sombre')
+    weather_foggy = int(weather == 'Brumeux')
 
     route = {
         "road_type": road_type,
@@ -91,23 +103,25 @@ if st.button("Générer une route"):
 if st.session_state.route:
     route = st.session_state.route
     st.write("### 🚦 Route générée :")
-    data = {
-        "Caractéristique": [
-            "Type de route", "Nombre de voies", "Courbure",
-            "Limite de vitesse", "Éclairage", "Météo",
-            "Accidents rapportés", "Présence de panneaux",
-            "Route publique", "Moment de la journée", "Vacances", "Saison écolière"
-        ],
-        "Valeur": [
-            route["road_type"], route["num_lanes"], route["curvature"],
-            route["speed_limit"], route["lighting"], route["weather"],
-            route["num_reported_accidents"], route["road_signs_presents"],
-            route["public_road"], route["time_of_day"],
-            route["holiday"], route["school_season"]
-        ]
-    }
-    df = pd.DataFrame(data)
-    st.table(df)
+
+    # Création de colonnes pour un affichage plus clair
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown(f"**🛣 Type de route :** {route['road_type'].capitalize()}")
+        st.markdown(f"**🛤 Nombre de voies :** {route['num_lanes']}")
+        st.markdown(f"**🔄 Courbure :** {route['curvature']}")
+        st.markdown(f"**🚦 Limite de vitesse :** {route['speed_limit']} km/h")
+        st.markdown(f"**💡 Éclairage :** {route['lighting'].capitalize()}")
+        st.markdown(f"**☁️ Météo :** {route['weather'].capitalize()}")
+
+    with col2:
+        st.markdown(f"**⚠️ Accidents rapportés :** {route['num_reported_accidents']}")
+        st.markdown(f"**🪧 Présence de panneaux :** {route['road_signs_presents']}")
+        st.markdown(f"**🛣 Route publique :** {route['public_road']}")
+        st.markdown(f"**⏰ Moment de la journée :** {route['time_of_day'].capitalize()}")
+        st.markdown(f"**🏖 Vacances :** {route['holiday']}")
+        st.markdown(f"**🎒 Saison écolière :** {route['school_season']}")
 
     # --- Entrée de la prédiction utilisateur ---
     st.session_state.prediction_user = st.number_input("Ton estimation du risque (%)", min_value=0.0, max_value=100.0, step=0.1)
@@ -158,36 +172,27 @@ if st.session_state.prediction_done and st.session_state.route:
     st.session_state.prediction_done = False
 
 # --- Affichage leaderboard ---
-if pseudo :
-    st.subheader("🏆 Leaderboard")
-    logger.info("Récupération du leaderboard depuis l'API...")
-    try:
-        res = requests.get(f"{API_URL}/leaderboard")
-        if res.status_code == 200:
+
+st.subheader("🏆 Leaderboard")
+logger.info("Récupération du leaderboard depuis l'API...")
+try:
+    res = requests.get(f"{API_URL}/leaderboard")
+    if res.status_code == 200:
             leaderboard = res.json()
             logger.info(f"Leaderboard récupéré ({len(leaderboard)} entrées).")
-        else:
+    else:
             leaderboard = []
             logger.warning(f"Échec récupération leaderboard : {res.status_code}")
-    except Exception as e:
-        leaderboard = []
-        logger.error(f"Erreur lors de la récupération du leaderboard : {e}")
+except Exception as e:
+    leaderboard = []
+    logger.error(f"Erreur lors de la récupération du leaderboard : {e}")
 
-    df = pd.DataFrame(leaderboard, columns=["pseudo", "score"])
 
-    if not df.empty:
-        df = df.sort_values(by="score", ascending=True)
-        logger.info("Leaderboard trié par score.")
-        df.index = np.arange(1, len(df) + 1)
-        df.index.name = "Rang"
-
-        # --- Attribution des médailles ---
-        medals = {1: "🥇", 2: "🥈", 3: "🥉"}
-        df.insert(0, "Médaille", [medals.get(i, "") for i in df.index])
-
-        # --- Affichage final ---
-        st.dataframe(df)
-        logger.info("Leaderboard affiché avec médailles et index réinitialisé.")
-
-    else:
-        logger.info("Leaderboard vide.")
+df = pd.DataFrame(leaderboard, columns=["pseudo","score"])
+if not df.empty:
+    df = df.sort_values(by="score", ascending=True)
+    df.index = np.arange(1, len(df)+1)
+    df.index.name = "Rang"
+    medals = {1: "🥇", 2: "🥈", 3: "🥉"}
+    df.insert(0, "Médaille", [medals.get(i,"") for i in df.index])
+    st.dataframe(df)

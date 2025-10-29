@@ -12,7 +12,7 @@ def init_db():
     conn.execute("""
         CREATE TABLE IF NOT EXISTS scores (
             pseudo TEXT,
-            score INTEGER
+            score FLOAT
         );
     """)
     conn.close()
