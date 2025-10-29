@@ -205,3 +205,4 @@ def lancer_jeu():
         medals = {1: "🥇", 2: "🥈", 3: "🥉"}
         df.insert(0, "Médaille", [medals.get(i,"") for i in df.index])
         st.dataframe(df)
+lancer_jeu()
