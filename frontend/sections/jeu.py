@@ -4,7 +4,7 @@ import requests
 import joblib
 import numpy as np
 import random
-import loguru as logger
+from loguru import logger
 
 # --- Fonction de génération d'une route ---
 def generer_route():
