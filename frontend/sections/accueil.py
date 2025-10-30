@@ -16,4 +16,4 @@ def lancer_accueil():
     st.write("- Un jeu de prédiction pour voir à quel point vous avez compris ce qui impactait les risques d'accidents. Vous essayerez de faire le score le plus proche de notre modèle parmi tous les participants !")
     st.write("- Une page d'informations concernant le contexte du projet et les outils utilisés")
 
-    st.write("**Naviguez à votre guise sur le menu à gauche afin de découvrir les différentes pages !")
+    st.write("**Naviguez à votre guise sur le menu à gauche afin de découvrir les différentes pages !**")
