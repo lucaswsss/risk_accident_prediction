@@ -18,7 +18,7 @@ def lancer_EDA():
     # --- Chargement du jeu de données
 
     df = pd.read_csv("data/train.csv")
-    df=df.drop["id"]
+    df=df.drop("id", axis=1, inplace=True)
 
     # --- Identification des types de variables
     colonnes_num = df.select_dtypes(include=["int64", "float64"]).columns.tolist()
