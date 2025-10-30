@@ -8,6 +8,7 @@ from loguru import logger
 from sections import jeu
 from sections import accueil
 from sections import predictions
+from sections import exploration
 
 
 st.set_page_config(page_title="Risques d'accidents", layout="wide", page_icon="🚗")
@@ -18,6 +19,8 @@ pages=st.sidebar.radio("Sélectionnez une page",["Accueil", "Explorations des do
 
 if pages == "Accueil":
     accueil.lancer_accueil()
+if pages == "Explorations des données":
+    exploration.lancer_EDA()
 if pages == "Prédiction des accidents":
     predictions.lancer_prediction()
 if pages == "Jeu des prédictions":
