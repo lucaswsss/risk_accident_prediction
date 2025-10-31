@@ -65,28 +65,30 @@ def lancer_EDA():
     # 📈 Corrélation entre les variables numériques et la cible
     # =================================================
     with tab2:
-        st.header("📈 Lien entre variables numériques et risque d'accident")
+        st.header("📈 Corrélation entre les variables numériques")
 
         if "accident_risk" not in df.columns:
             st.warning("⚠️ La variable 'accident_risk' n'est pas présente dans le dataset.")
         else:
-            var_num_corr = st.selectbox("Choisissez une variable numérique :", colonnes_num, key="cor_num")
-            fig, ax = plt.subplots(figsize=(7, 4))
-            sns.scatterplot(
-                x=df[var_num_corr],
-                y=df["accident_risk"],
-                hue=df["accident_risk"],
-                palette="coolwarm",
-                ax=ax,
-            )
-            ax.set_title(f"Relation entre {var_num_corr} et le risque d'accident", fontsize=14)
-            st.pyplot(fig)
+            # Calcul de la matrice de corrélation
+            corr = df[colonnes_num].corr()
 
-            # Matrice de corrélation globale
-            st.subheader("🔗 Matrice de corrélation (variables numériques)")
-            corr = df[colonnes_num + ["accident_risk"]].corr()
+            # Création de la figure
             fig, ax = plt.subplots(figsize=(10, 6))
-            sns.heatmap(corr, annot=True, cmap="magma", fmt=".2f", ax=ax)
+
+            # Heatmap style feu tricolore
+            sns.heatmap(
+                corr,
+                annot=True,                
+                fmt=".2f",                 
+                cmap="RdYlGn_r",           
+                center=0,                  
+                linewidths=0.5,            
+                cbar_kws={"shrink": 0.8},  
+                ax=ax
+            )
+
+            ax.set_title("Matrice de corrélation entre variables numériques et risque d'accident", fontsize=14, pad=12)
             st.pyplot(fig)
 
     # =================================================

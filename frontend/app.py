@@ -9,6 +9,7 @@ from sections import jeu
 from sections import accueil
 from sections import predictions
 from sections import exploration
+from sections import apropos
 
 
 st.set_page_config(page_title="Risques d'accidents", layout="wide", page_icon="🚗")
@@ -25,3 +26,5 @@ if pages == "Prédiction des accidents":
     predictions.lancer_prediction()
 if pages == "Jeu des prédictions":
     jeu.lancer_jeu()
+if pages == "A propos de l'application":
+    apropos.lancer_a_propos()
