@@ -56,8 +56,8 @@ def lancer_a_propos():
         st.image("https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", width=60)
         st.caption("GitHub")
     with col7:
-        st.image("https://raw.githubusercontent.com/tiangolo/fastapi/master/docs/en/docs/img/logo-margin/logo-teal.png", width=150)
-        st.caption("FastAPI")
+        st.image("https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg", width=130)
+        st.caption("Flask")
     with col8:
         st.image("https://raw.githubusercontent.com/lucaswsss/risk_accident_prediction/main/frontend/assets/render.svg", width=150)
         st.caption("Render")
@@ -73,11 +73,12 @@ def lancer_a_propos():
     col1, col2 = st.columns(2)
     with col1:
         st.markdown("""
-        #### 🧠 Backend — API de prédiction
-        - Développée avec **FastAPI**  
-        - Hébergée sur **Render**  
-        - Le modèle est chargé via **Joblib** et retourne la probabilité d’accident  
+        #### 🧠 Backend — Modèle et API
+        - Développée avec **Flask** et **DuckDB**  
+        - Hébergée sur **Render**
         - Conçue pour être légère, rapide et facilement intégrable
+        - Le modèle est chargé via **Joblib** et retourne la probabilité d’accident  
+
         """)
     with col2:
         st.markdown("""
