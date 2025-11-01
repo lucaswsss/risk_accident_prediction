@@ -2,15 +2,19 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2
 import os
+#from dotenv import load_dotenv
+
+#load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
 # URL de connexion PostgreSQL (tu la mets dans Render comme variable d'environnement)
-DB_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
+print(f"🔍 DATABASE_URL = {DATABASE_URL}")
 
 def get_connection():
-    return psycopg2.connect(DB_URL)
+    return psycopg2.connect(DATABASE_URL)
 
 def init_db():
     conn = get_connection()
