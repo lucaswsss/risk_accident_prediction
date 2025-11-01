@@ -15,3 +15,4 @@ flask-cors==4.0.0
 gunicorn==21.2.0
 duckdb
 requests==2.31.0
+psycopg2-binary
